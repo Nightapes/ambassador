@@ -555,7 +555,9 @@ class IRMappingGroup (IRResource):
             if unspecified_mappings:
                 for mapping in self.mappings:
                     if not mapping.get("weight", 0):
-                        mapping.weight = int(round(100.0 - total_weight)/unspecified_mappings))
+                        calculatedWeight = int(round(100.0 - total_weight)/unspecified_mappings))
+                        # if a weight got negative during calculation set to 0
+                        mapping.weight = max(calculatedWeight,0)
             elif total_weight != 100.0:
                 for mapping in self.mappings:
                     mapping.weight *= int(round(100.0/total_weight)
